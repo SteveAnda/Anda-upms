@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	    http://www.springframework.org/schema/util
+	    http://www.springframework.org/schema/util/spring-util.xsd
+	    http://www.springframework.org/schema/context
+	    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <description>upms-service-client</description>
+
+    <context:property-placeholder location="classpath*:upms-service-client.properties"/>
+
+    <!-- Shiro的Web过滤器 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" value=""/>
+    </bean>
+
+    <!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realms" >
+            <list><ref bean="upmsRealm"/></list>
+        </property>
+        <property name="sessionManager" ref=""
+    </bean>
+
+    <!-- realm实现，继承自AuthorizingRealm -->
+    <bean id="upmsRealm" class="com.anda.shiro.realm.UpmsRealm" ></bean>
+
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- 全局session超时时间 -->
+        <property name="globalSessionTimeout" value="${zheng.upms.session.timeout}"/>
+        <!-- sessionDAO -->
+        <property name="sessionDAO" value=""
+    </bean>
+
+    <!-- 会话DAO，可重写，持久化session -->
+    <bean id="" class="org.apache.shiro.web."
+</beans>
